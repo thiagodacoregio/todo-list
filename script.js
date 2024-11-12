@@ -2,7 +2,7 @@ let listElement = document.querySelector("#app ul");
 let inputElement = document.querySelector("#app input");
 let buttonElement = document.querySelector("#app button");
 
-let task = [];
+let task = JSON.parse(localStorage.getItem("@taskList")) || [];
 
 function renderTask() {
   listElement.innerHTML = "";
@@ -27,6 +27,8 @@ function renderTask() {
   });
 }
 
+renderTask();
+
 function addTask() {
   if (inputElement.value === "") {
     alert("Write something!");
@@ -38,6 +40,7 @@ function addTask() {
     inputElement.value = "";
 
     renderTask();
+    dataSave();
   }
 }
 
@@ -46,4 +49,9 @@ buttonElement.onclick = addTask;
 function deleteTask(position) {
   task.splice(position, 1);
   renderTask();
+  dataSave();
+}
+
+function dataSave() {
+  localStorage.setItem("@taskList", JSON.stringify(task));
 }
